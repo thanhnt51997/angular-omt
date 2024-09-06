@@ -36,7 +36,7 @@ export class AppComponent {
     onSubmit() {
         if (this.editingIndex !== null) {
             this.userLists[this.editingIndex] = { ...this.user };
-            this.editingIndex = null; // Clear editing index
+            this.editingIndex = null;
         } else {
             this.userLists.push({ ...this.user });
         }
@@ -45,6 +45,7 @@ export class AppComponent {
 
     deleteUser(index: number) {
         this.userLists.splice(index, 1);
+        this.resetForm();
     }
 
     editUser(index: number) {
