@@ -1,2 +1,107 @@
 <h1>User Form</h1>
-<h2>User List</h2>
+<form (ngSubmit)="onSubmit(userForm)" #userForm="ngForm">
+    <!-- Name Input -->
+    <div>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name"  [(ngModel)]="formUser.name"  ngModel required />
+    </div>
+
+    <!-- Gender Radio Buttons -->
+    <div>
+        <label>Gender:</label>
+        <input type="radio" id="male"  [(ngModel)]="formUser.gender" name="gender" value="Male" ngModel required />
+        <label for="male">Male</label>
+        <input type="radio" id="female" [(ngModel)]="formUser.gender" name="gender" value="Female" ngModel />
+        <label for="female">Female</label>
+    </div>
+
+    <!-- Email Input -->
+    <div>
+        <label for="email">Email:</label>
+        <input type="email" id="email" [(ngModel)]="formUser.email" name="email" ngModel required />
+    </div>
+
+    <!-- Phone Input (Number) -->
+    <div>
+        <label for="phone">Phone:</label>
+        <input type="number" id="phone" [(ngModel)]="formUser.phone" name="phone" ngModel required />
+    </div>
+
+    <!-- Country Select -->
+    <div>
+        <label for="country">Country:</label>
+        <select id="country" name="country" [(ngModel)]="formUser.country" ngModel required>
+            <option value="" disabled>Select Country</option>
+            <option *ngFor="let country of countries" [value]="country.name">{{ country.name }}</option>
+        </select>
+    </div>
+
+    <!-- Address Input -->
+    <div>
+        <label for="address">Address:</label>
+        <input type="text" id="address" [(ngModel)]="formUser.address" name="address" ngModel required />
+    </div>
+
+    <!-- Skills Checkboxes -->
+    <div>
+        <label>Skills:</label>
+        <div *ngFor="let skill of skills">
+            <label>
+                <input
+                        type="checkbox"
+                        [value]="skill"
+                        (change)="onSkillChange(skill, $event)">
+                {{ skill }}
+            </label>
+        </div>
+    </div>
+
+    <!-- Description Textarea -->
+    <div>
+        <label for="description">Description:</label>
+        <textarea id="description" [(ngModel)]="formUser.description" name="description" ngModel></textarea>
+    </div>
+
+    <!-- Submit Button -->
+    <div>
+        <button type="submit" [disabled]="!userForm.form.valid">Submit</button>
+    </div>
+</form>
+
+<section *ngIf="userList.length > 0">
+    <h2>User List</h2>
+    <table class="table table table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Gender</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Country</th>
+                <th>Address</th>
+                <th>Skills</th>
+                <th>Description</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let user of userList">
+                <td class="text-center">{{ user.id }}</td>
+                <td>{{ user.name }}</td>
+                <td>{{ user.gender }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.phone }}</td>
+                <td>{{ user.country }}</td>
+                <td>{{ user.address }}</td>
+                <td>{{ user.skills }}</td>
+                <td>{{ user.description }}</td>
+                <td>
+                    <button (click)="editUser(user)">Update</button>
+                    <button (click)="deleteUser(user)">Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+</section>
