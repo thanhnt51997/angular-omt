@@ -1,11 +1,11 @@
 export interface UserModel {
-    "id": string,
-    "name": string,
-    "email": string,
-    "phone": number,
-    "country": string,
-    "gender": "male",
-    "address": string,
-    "skills": string[],
-    "description": string,
+    id: string
+    name: string;
+    email: string;
+    gender: string;
+    phone: string;
+    country: string;
+    address: string;
+    skill: string;
+    description: string;
 }

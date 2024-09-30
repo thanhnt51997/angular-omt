@@ -72,35 +72,35 @@
     <h2>User List</h2>
     <table class="table table table-striped">
         <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Gender</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>Country</th>
-                <th>Address</th>
-                <th>Skills</th>
-                <th>Description</th>
-                <th>Action</th>
-            </tr>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Gender</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Country</th>
+            <th>Address</th>
+            <th>Skills</th>
+            <th>Description</th>
+            <th>Action</th>
+        </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let user of userList">
-                <td class="text-center">{{ user.id }}</td>
-                <td>{{ user.name }}</td>
-                <td>{{ user.gender }}</td>
-                <td>{{ user.email }}</td>
-                <td>{{ user.phone }}</td>
-                <td>{{ user.country }}</td>
-                <td>{{ user.address }}</td>
-                <td>{{ user.skills }}</td>
-                <td>{{ user.description }}</td>
-                <td>
-                    <button (click)="editUser(user)">Update</button>
-                    <button (click)="deleteUser(user)">Delete</button>
-                </td>
-            </tr>
+        <tr *ngFor="let user of userList">
+            <td class="text-center">{{ user.id }}</td>
+            <td>{{ user.name }}</td>
+            <td>{{ user.gender }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.phone }}</td>
+            <td>{{ user.country }}</td>
+            <td>{{ user.address }}</td>
+            <td>{{ user.skills }}</td>
+            <td>{{ user.description }}</td>
+            <td>
+                <button (click)="editUser(user)">Update</button>
+                <button (click)="deleteUser(user)">Delete</button>
+            </td>
+        </tr>
         </tbody>
     </table>
 
