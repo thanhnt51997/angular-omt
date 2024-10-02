@@ -54,7 +54,9 @@
 
     <div class="form-group">
         <label>Phone</label>
-        <input type="text" [ngModel]="user.phone" #phone="ngModel"  pattern="^(0|\\+84)(3[2-9]|5[6|8|9]|7[0|6-9]|8[1-5]|9[0-9])[0-9]{7}$" required name="phone"
+        <input type="text" [ngModel]="user.phone" #phone="ngModel"
+               pattern="^(0|\\+84)(3[2-9]|5[6|8|9]|7[0|6-9]|8[1-5]|9[0-9])[0-9]{7}$"
+               required name="phone"
                placeholder="Nhap so dien thoai cua ban"
                class="form-control">
         <div class="col alert alert-danger" role="alert"
@@ -82,11 +84,22 @@
 
     <div class="form-group">
         <label>Address</label>
-        <input type="text" [ngModel]="user.address" #address="ngModel" required name="address" placeholder="Nhap dia chi cua ban"
+        <input type="text" [ngModel]="user.address" #address="ngModel"
+               minlength="3" maxlength="18"
+               required name="address"
+               placeholder="Nhap dia chi cua ban"
                class="form-control">
         <div class="col alert alert-danger" role="alert"
              *ngIf="address?.errors?.required && address?.touched">
             Address is invalid
+        </div>
+        <div class="col alert alert-danger" role="alert"
+             *ngIf="address?.errors?.minlength && address?.touched">
+            Address min 3 characters
+        </div>
+        <div class="col alert alert-danger" role="alert"
+             *ngIf="address?.errors?.maxlength && address?.touched">
+            Address max 18 characters
         </div>
     </div>
     <div class="form-group">
@@ -105,8 +118,25 @@
 
     <div class="form-group">
         <label>Description</label>
-        <textarea [ngModel]="user.description" name="description" placeholder="Mo ta ban than"
+        <textarea [ngModel]="user.description"
+                  required
+                  minlength="3" maxlength="128"
+                  #description="ngModel"
+                  name="description"
+                  placeholder="Mo ta ban than"
                   class="form-control"></textarea>
+        <div class="col alert alert-danger" role="alert"
+             *ngIf="description?.errors?.required && description?.touched">
+            Description is invalid
+        </div>
+        <div class="col alert alert-danger" role="alert"
+             *ngIf="description?.errors?.minlength && description?.touched">
+            Description min 3 characters
+        </div>
+        <div class="col alert alert-danger" role="alert"
+             *ngIf="description?.errors?.maxlength && description?.touched">
+            Description max 128 characters
+        </div>
     </div>
 
     <button class="btn btn-primary" type="submit"

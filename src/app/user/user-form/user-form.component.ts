@@ -40,7 +40,6 @@ export class UserFormComponent implements OnInit {
         description: ''
     };
     editingUUID: string | null = null;
-    phoneNumberPattern = `/^(0|\+84)(3[2-9]|5[6|8|9]|7[0|6-9]|8[1-5]|9[0-9])[0-9]{7}$/`;
 
     isAtLeastOneChecked(): boolean {
         return this.selectedSkills.length > 0;
