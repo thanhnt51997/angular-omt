@@ -3,6 +3,7 @@ import {UserModel} from "../../models/user.model";
 import {Country} from "../../models/country.model";
 import * as jsonCountries from "../../../assets/countries.json";
 import * as uuid from 'uuid';
+import {NgForm} from "@angular/forms";
 
 @Component({
     selector: 'app-user-form',
@@ -18,11 +19,15 @@ export class UserFormComponent implements OnInit {
     }
 
     userLists: UserModel[] = [];
-    listSkills: string[] = ['C#', 'PHP', 'Angular']
-
+    listSkills = [
+        {id: 1, name: 'JavaScript'},
+        {id: 2, name: 'Angular'},
+        {id: 3, name: 'TypeScript'},
+        {id: 4, name: 'Node.js'},
+    ];
     countries: Country[] = (jsonCountries as any).default as Country[];
 
-    selectedSkills: boolean[] = [];
+    selectedSkills: number[] = []; // Mảng chứa các id của các skill được chọn
     user: UserModel = {
         id: '',
         name: '',
@@ -35,58 +40,52 @@ export class UserFormComponent implements OnInit {
         description: ''
     };
     editingUUID: string | null = null;
+    phoneNumberPattern = `/^(0|\+84)(3[2-9]|5[6|8|9]|7[0|6-9]|8[1-5]|9[0-9])[0-9]{7}$/`;
 
-    onSubmit(): void {
-        if (this.editingUUID !== null) {
-            const index = this.userLists.findIndex(user => user.id === this.editingUUID);
-            if (index !== -1) {
-                this.userLists[index] = {...this.user, id: this.editingUUID}
+    isAtLeastOneChecked(): boolean {
+        return this.selectedSkills.length > 0;
+    }
+
+    onSubmit(formValue: NgForm): void {
+        let value = formValue.value;
+        if (this.isAtLeastOneChecked()) {
+            if (this.editingUUID !== null) {
+                const index = this.userLists.findIndex(user => user.id === this.editingUUID);
+                if (index !== -1) {
+                    this.userLists[index] = {...this.user, id: this.editingUUID}
+                }
+                this.editingUUID = null;
+            } else {
+                const newUser = {
+                    ...this.user,
+                    id: uuid.v4(),
+                    value
+                };
+                this.userLists.push(newUser);
+                formValue.resetForm();
             }
-            this.editingUUID = null;
-        } else {
-            const newUser = {
-                ...this.user,
-                id: uuid.v4()
-            };
-            this.userLists.push(newUser);
         }
-        this.resetForm();
+    }
+
+    editUser(uuid: string): void {
+
     }
 
     deleteUser(uuid: string): void {
         this.userLists = this.userLists.filter(user => user.id !== uuid);
-        this.resetForm();
     }
 
-    editUser(uuid: string): void {
-        const user = this.userLists.find(user => user.id === uuid);
-        if (user) {
-            this.user = {...user};
-            this.editingUUID = uuid;
-            this.selectedSkills = this.listSkills.map(skill => this.user.skill.includes(skill));
+    onSkillChange(id: number, event: Event) {
+        const checkbox = event.target as HTMLInputElement;
+        const isChecked = checkbox.checked;
+
+        if (isChecked) {
+            this.selectedSkills.push(id); // Thêm id vào mảng nếu checkbox được chọn
+        } else {
+            const index = this.selectedSkills.indexOf(id);
+            if (index > -1) {
+                this.selectedSkills.splice(index, 1); // Loại bỏ id khỏi mảng nếu bỏ chọn
+            }
         }
     }
-
-    resetForm(): void {
-        this.user = {
-            id: '',
-            name: '',
-            email: '',
-            gender: '',
-            phone: '',
-            country: '',
-            address: '',
-            skill: '',
-            description: ''
-        };
-        this.selectedSkills = [];
-    }
-
-    onSkillChange(index: number): void {
-        this.user.skill = this.listSkills
-            .filter((_, i) => this.selectedSkills[i])
-            .join(', ');
-    }
-
-    protected readonly events = module
 }
