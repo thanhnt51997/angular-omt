@@ -1,17 +1,16 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, Input} from '@angular/core';
 import {UserModel} from "../../models/user.model";
 import {Country} from "../../models/country.model";
 import * as jsonCountries from "../../../assets/countries.json";
 import * as uuid from 'uuid';
 import {NgForm} from "@angular/forms";
-
 @Component({
     selector: 'app-user-form',
     templateUrl: './user-form.component.html',
     styleUrls: ['./user-form.component.css']
 })
 export class UserFormComponent implements OnInit {
-
+    @Input() userType?: string;  // Loại user: 'user' hoặc 'teacher'
     constructor() {
     }
 

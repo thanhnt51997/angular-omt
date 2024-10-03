@@ -11,6 +11,11 @@ import {LayoutComponent} from './layout/layout.component';
 import {TopMenuComponent} from './top-menu/top-menu.component';
 import {FooterComponent} from './footer/footer.component';
 import {HashLocationStrategy, LocationStrategy} from '@angular/common';
+import {SkillComponent} from "./user/user-form/skill/skill.component";
+import {LanguageComponent} from "./user/user-form/language/language.component";
+import {ProfessionalComponent} from "./user/user-form/professional/professional.component";
+import {MarriageComponent} from "./user/user-form/marriage/marriage.component";
+import {UserTabComponent} from "./user/user-tab/user-tab.component";
 
 @NgModule({
     declarations: [
@@ -18,7 +23,12 @@ import {HashLocationStrategy, LocationStrategy} from '@angular/common';
         UserFormComponent,
         LayoutComponent,
         TopMenuComponent,
-        FooterComponent
+        FooterComponent,
+        SkillComponent,
+        LanguageComponent,
+        ProfessionalComponent,
+        MarriageComponent,
+        UserTabComponent
     ],
     imports: [
         BrowserModule,
