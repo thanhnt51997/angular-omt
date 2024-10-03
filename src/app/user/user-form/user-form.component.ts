@@ -1,32 +1,22 @@
-import {Component, OnInit, Input} from '@angular/core';
+import {Component, ContentChild, OnInit} from '@angular/core';
 import {UserModel} from "../../models/user.model";
 import {Country} from "../../models/country.model";
 import * as jsonCountries from "../../../assets/countries.json";
-import * as uuid from 'uuid';
-import {NgForm} from "@angular/forms";
+
 @Component({
     selector: 'app-user-form',
     templateUrl: './user-form.component.html',
     styleUrls: ['./user-form.component.css']
 })
 export class UserFormComponent implements OnInit {
-    @Input() userType?: string;  // Loại user: 'user' hoặc 'teacher'
+    @ContentChild('specialInput') specialInput: any;  // Truy cập nội dung chiếu qua ng-content
     constructor() {
     }
 
     ngOnInit(): void {
     }
 
-    userLists: UserModel[] = [];
-    listSkills = [
-        {id: 1, name: 'JavaScript'},
-        {id: 2, name: 'Angular'},
-        {id: 3, name: 'TypeScript'},
-        {id: 4, name: 'Node.js'},
-    ];
     countries: Country[] = (jsonCountries as any).default as Country[];
-
-    selectedSkills: number[] = []; // Mảng chứa các id của các skill được chọn
     user: UserModel = {
         id: '',
         name: '',
@@ -36,54 +26,10 @@ export class UserFormComponent implements OnInit {
         country: '',
         address: '',
         skill: '',
-        description: ''
+        description: '',
+        professional: ''
     };
-    editingUUID: string | null = null;
 
-    isAtLeastOneChecked(): boolean {
-        return this.selectedSkills.length > 0;
-    }
 
-    onSubmit(formValue: NgForm): void {
-        let value = formValue.value;
-        if (this.isAtLeastOneChecked()) {
-            if (this.editingUUID !== null) {
-                const index = this.userLists.findIndex(user => user.id === this.editingUUID);
-                if (index !== -1) {
-                    this.userLists[index] = {...this.user, id: this.editingUUID}
-                }
-                this.editingUUID = null;
-            } else {
-                const newUser = {
-                    ...this.user,
-                    id: uuid.v4(),
-                    value
-                };
-                this.userLists.push(newUser);
-                formValue.resetForm();
-            }
-        }
-    }
 
-    editUser(uuid: string): void {
-
-    }
-
-    deleteUser(uuid: string): void {
-        this.userLists = this.userLists.filter(user => user.id !== uuid);
-    }
-
-    onSkillChange(id: number, event: Event) {
-        const checkbox = event.target as HTMLInputElement;
-        const isChecked = checkbox.checked;
-
-        if (isChecked) {
-            this.selectedSkills.push(id); // Thêm id vào mảng nếu checkbox được chọn
-        } else {
-            const index = this.selectedSkills.indexOf(id);
-            if (index > -1) {
-                this.selectedSkills.splice(index, 1); // Loại bỏ id khỏi mảng nếu bỏ chọn
-            }
-        }
-    }
 }

@@ -16,6 +16,7 @@ import {LanguageComponent} from "./user/user-form/language/language.component";
 import {ProfessionalComponent} from "./user/user-form/professional/professional.component";
 import {MarriageComponent} from "./user/user-form/marriage/marriage.component";
 import {UserTabComponent} from "./user/user-tab/user-tab.component";
+import {LoadingComponent} from "./share/loading/loading.component";
 
 @NgModule({
     declarations: [
@@ -28,7 +29,8 @@ import {UserTabComponent} from "./user/user-tab/user-tab.component";
         LanguageComponent,
         ProfessionalComponent,
         MarriageComponent,
-        UserTabComponent
+        UserTabComponent,
+        LoadingComponent,
     ],
     imports: [
         BrowserModule,
